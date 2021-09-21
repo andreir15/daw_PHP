@@ -1,31 +1,19 @@
 <?php
-$x=0;
-
-$nombre="";
-$nArray[$x]=$nombre;
-$edad=0;
-
-
-while($nombre!="fin"){
 echo "Nombre?";
 fscanf(STDIN, "%s\n", $nombre);
-for($i=0;$i=$x;$i++){
-    $nArray[$i]=$nombre;
-}
-
-if($nombre!="fin"){
+while($nombre!="fin"){
 echo "Edad de $nombre?";
 fscanf(STDIN, "%d\n", $edad);
-$eArray[$nombre]=$edad;
-for($i=0;$i=$x;$i++){
-    $eArray[$i]=$edad;
+$nArray [$nombre] = $edad;
+echo "Nombre?";
+fscanf(STDIN, "%s\n", $nombre);
 }
-}
-if($nombre=="fin"){
+
+foreach($nArray as $nombre=>$edad){
    
-    echo "$nArray[$x]($eArray[$nombre]), ";
+    echo "$nombre($edad), ";
     
     }
-}
+
 
 ?>
