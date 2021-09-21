@@ -24,8 +24,8 @@ switch($a){
 }
 echo "\n";
 ///////////////
-$nombre="Jose";
 echo "DIME tu nombre";
-fscanf(STDTN, "%s\n", $nombre);
+fscanf(STDIN, "%d\n", $nombre);
 echo "Hola $nombre";// si es un numero en vez de $d hay que poner %s
+
 ?>
