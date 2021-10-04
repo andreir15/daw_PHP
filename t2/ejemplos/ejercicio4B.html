@@ -1,6 +1,0 @@
-<!--Primer apartado-->
-<form action="http://somos.los.mas">
-<input name="listos" type="text"/>
-<input name="mundo.entero" type="text"/>
-<input type="submit"/>
-</form>
