@@ -1,18 +1,17 @@
 <h1>NIVEL 0</h1>
 
-<?php
-
-echo <<<HTML
-<table border=1>
+<table border="1">
   <tr>
     <th>Nombre Cookie</th>
     <th>Contenido cookie</th>
   </tr>
-  <tr>
-    <td>NOMBRE</td>
-    <td>CONTENIDO</td>
-  </tr>
-</table>
+<?php
 
-HTML;
-?>
+foreach($_COOKIE as $k=>$v){
+    
+echo "<tr><td>$k</td><td>$v</td></tr>";
+}
+  ?>
+  
+</table>
+<a href="ej03.php">Volver</a>

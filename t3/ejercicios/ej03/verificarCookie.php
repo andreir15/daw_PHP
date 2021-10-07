@@ -2,15 +2,29 @@
 <?php
 $cookie=isset($_GET["nombre"])?$_GET["nombre"]:null;
 $contenido=isset($_GET["contenido"])?$_GET["contenido"]:null;
-$nivel=isset($_GET["nivel"])?$_GET["nivel"]:"0";
-$ruta="curso2021/t3/ejercicios/ej03";
-switch ($nivel){
-    case "0":$ruta.="/";break;
-    case "1":$ruta.="/nivel1/";break;
-    case "2":$ruta.="/nivel1/nivel2/";break;
+$nivel=isset($_GET["nivel"])?$_GET["nivel"]:null;
+
+if ($cookie!=null && $contenido != null && $nivel != null) {
+    $rutaBase = pathinfo($_SERVER["REQUEST_URI"])["dirname"];
+    $ruta = ($nivel==0?
+        $rutaBase."/":
+        ($nivel==1?$rutaBase."/nivel1/":
+            $rutaBase."/nivel1/nivel2/"));
+    setcookie ( $cookie, $contenido, 0, $ruta );
+echo "<h1>La cookie $cookie= $contenido ha sido creada</h1>";
 }
-    setcookie($cookie,$contenido,"0",$ruta);
-echo <<<HTML
-<br/>La cookie $cookie= $contenido ha sido creada.
-HTML;
+else {
+    if ($cookie==null) {
+        echo "El nombre no puede ser nulo<br/>";
+    }
+    
+    if ($contenido==null) {
+        echo "El contenido no puede ser nulo<br/>";
+    }
+    
+    if ($nivel==null) {
+        echo "El nivel no puede ser nulo<br/>";
+    }
+    
+}
 ?>
