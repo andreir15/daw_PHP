@@ -27,6 +27,3 @@ por un script ubicado en /</h1>
 <input type="submit" value="Crear cookie"/>
 </fieldset>
 </form>
-
-
-
