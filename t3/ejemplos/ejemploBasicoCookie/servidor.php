@@ -2,7 +2,7 @@
 $andrei=isset($_COOKIE["andrei"])? $_COOKIE["andrei"]:"NO existe";
 $peligro=isset($_COOKIE["peligro"])?$_COOKIE["peligro"]:"NO existe";;
 setcookie("andrei","te la he colado");
-//setcooki(nombre de la cookie, contenido de la cookie)
+//setcookie(nombre de la cookie, contenido de la cookie)
 setcookie("peligro","Esta web esta maldita");
 ?>
 <h1>Hola desde el servidor</h1><br/>
