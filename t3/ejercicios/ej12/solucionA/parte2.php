@@ -1,31 +1,31 @@
 <?php
-setcookie("num",0);
-$sumando=isset($_GET["sumandos"])?(int)$_GET["sumandos"]:2;
 
-if($_COOKIE["sumando"]==$_GET["num"]){
-    
+$sumando=isset($_GET["sumandos"])?$_GET["sumandos"]:$_COOKIE["sumandos"];
+$n=isset($_GET["num"])?$_GET["num"]:null;
+$paso=isset($_COOKIE["paso"])?$_COOKIE["paso"]:1;
 
-echo <<<HTML
-<form action="fin.php">
-<label for="num>"<h1>Introduce el sumando (1...10)</h1></label>
-<br/>
-<input type="text" id="num" />
-<input type="submit" value="Enviar"/>
-</form>
-HTML;
+if($n==null){
+    setcookie("sumandos",$sumando);
+    setcookie("paso",2);
+   setcookie("sumandosArray",serialize([]));
 }
 else{
+   setcookie("paso",$paso+1);
+   $sumandos=unserialize($_COOKIE["sumandosArray"]);
+   $sumandos[]=$n;
+   setcookie("sumandosArray",serialize($sumandos));
     
-    echo <<<HTML
-<form action="parte2.php">
-<label for="num>"<h1>Introduce el sumando (1...10)</h1></label>
+    if($_COOKIE["paso"]>$_COOKIE["sumandos"]){
+        header("Location:fin.php");
+    }
+    
+    
+}
+?>
+<form>
+<h4>Introduce el sumando <?=$paso?>/<?=$sumando ?> (1...10)</h4>
 <br/>
-<input type="text" id="num" />
+<input type="number" max="10" min="1" name="num"/>
 <input type="submit" value="Enviar"/>
 </form>
-HTML;
-}
 
-
-
-?>

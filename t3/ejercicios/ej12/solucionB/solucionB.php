@@ -1,7 +1,6 @@
-<?php
-setcookie("paso");
-setcookie("sumandos");
-setcookie("sumandosArray");
+<?php 
+session_start();
+session_unset();
 ?>
 <form action="parte2.php">
 <p>Indica el numero de sumando(2-15)</p>
