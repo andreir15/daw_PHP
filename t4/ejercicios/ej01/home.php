@@ -3,6 +3,7 @@
   function usarAjax(){
 var xmlhttp=new XMLHttpRequest();
 xmlhttp.open("GET","ajax.php?nombre="+document.getElementById("nombre").value,true);
+xmlhttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
 xmlhttp.send();
 
 xmlhttp.onreadystatechange=function(){

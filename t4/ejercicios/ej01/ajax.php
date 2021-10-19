@@ -1,4 +1,8 @@
 <?php 
+$esAjax=isset($_SERVER["HTTP_X_REQUESTED_WITH"])?
+strtolower($_SERVER["HTTP_X_REQUESTED_WITH"])=="xmlhttprequest":false;
+if($esAjax){
+    $saludo=saludo($_GET["nombre"]);
 $num=rand(1,3);
 function saludo($nombre) {
     $numRnd=rand(1,3);
@@ -10,7 +14,11 @@ function saludo($nombre) {
     }
 return $saludo;
 }
+echo <<<HTML
+<h$num>
+$saludo
+</h$num>
+HTML;
+}
+
 ?>
-<h<?=$num ?>>
-<?=saludo($_GET["nombre"]) ?>
-</h<?=$num ?>>
