@@ -1,7 +1,8 @@
 <?php
 $esAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) ? strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest" : false;
 if ($esAjax) {
-   
+    $ca = isset ($_REQUEST['ca'])?$_REQUEST['ca']:null;
+    pintarSelect ( 'provincias', $BDccaa [$ca], ['0'], 'simple' );
     $provincias=['Andalucía' => ['Almería','Cádiz','Córdoba','Granada','Huelva','Jaén','Málaga','Sevilla'], 
         'Aragón' => ['Huesca','Teruel','Zaragoza'], 
         'Asturias (Principado de)' => ['Asturias'],
@@ -21,10 +22,13 @@ if ($esAjax) {
         'Navarra (Comunidad Foral de)' => ['Navarra'],
         'País Vasco' => ['Álava','Guipúzcoa','Vizcaya'],
         'Rioja (La)' => ['Rioja (La)']];
-    function comunidad($ccaa){
-        $ccaa=isset($_GET["ccaa"])?$_GET["ccaa"]:"Andalucía";
-       
-        
+    function pintarSelect($nombre, $etiquetas, $seleccionados, $tipo) {
+        echo '<label for="id' . $nombre . '">' . $nombre . '</label>' ;
+        echo '<select ' . ($tipo == 'multiple' ? 'multiple="multiple"' : '') . ' id="id' . $nombre . '" ' . 'name="' . $nombre . ($tipo == 'multiple' ? '[]' : '') . '" onChange="cambiar'.$nombre.'()">';
+        foreach ( $etiquetas as $k => $v ) {
+            echo '<option ' . (in_array ( $k, $seleccionados ) ? 'selected="selected"' : '') . ' value="' . $v . '">' . $v . '</option>' ;
+        }
+        echo '</select>';
     }
     
        

@@ -1,3 +1,6 @@
+<?php 
+include ("ajax.php")?>
+<html>
 <head>
 <script>
   function usarAjax(){
@@ -8,7 +11,7 @@ xmlhttp.send();
 
 xmlhttp.onreadystatechange=function(){
    if(xmlhttp.readyState==4 && xmlhttp.status==200){
-         document.getElementById("idDiv").innerHTML=xmlhttp.responseText;
+         document.getElementById("idProvincias").innerHTML=xmlhttp.responseText;
      }
   }
  
@@ -17,16 +20,19 @@ xmlhttp.onreadystatechange=function(){
 </head>
 <body>
 <h1>Comunidades autonomas </h1>
-
-ccaa <select id="ccaa" onchange="comunidad($ccaa);">
 <?php 
-
+$comunidades = array_keys ( $provincias );
+pintarSelect ( "ccaa", $comunidades, [
+    "0"
+], "simple" );
+echo "<br/>";
+echo "<div id='idProvincias'>";
+pintarSelect ( "provincias", $provincias [$comunidades ["0"]], [
+    "0"
+], "simple" );
+echo "</div>";
+echo "<br/>";
 ?>
-<option value="andalucia">Andalucia</option>
-</select>
-<br/>
-provincias <select id="provincia"></select>
-<br/>
 <h1>Escoge una comunidad autonoma</h1>
 <br/>
 Observa el cambio de provincias via AJAX
@@ -34,3 +40,4 @@ Observa el cambio de provincias via AJAX
 </div>
 <br/>
 </body>
+</html>
