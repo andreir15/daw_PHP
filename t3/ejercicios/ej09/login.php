@@ -4,15 +4,15 @@
 
 session_start();
 $usuario=isset($_SESSION["usuario"])?$_SESSION["usuario"]:null;
-$contra=isset($_SESSION["contra"])?$_SESSION["contra"]:null;
-$usuarioR=isset($_GET["usuarioRegistro"])?$_GET["usuarioRegistro"]:null;
-$contraR=isset($_GET["contraRegistro"])?$_GET["contraRegistro"]:null;
-if(isset($_GET["usuarioRegistro"])&&isset($_GET["contraRegistro"])){
-$_SESSION["BD"][]=[$usuarioR=>$contraR];
-}
 
-if($usuario!=null){
-    echo "Usuario <input type='text' name='usuario' value='{$_SESSION["usuario"]}'/>";
+if(isset($_GET["usuarioRegistro"])){
+$_SESSION["usuario"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"],"mensajes"=>[]];
+}
+$_SESSION["BD"]=["activo"=>"","recordar"=>false,"usuarios"=>$usuario];
+
+$recordar=isset($_SESSION["BD"]["recordar"])?$_SESSION["BD"]["recordar"]:null;
+if($recordar!=true){
+    echo "Usuario <input type='text' name='usuario' value='{$_SESSION["BD"]["activo"]}'/>";
     
 }else{
     echo "Usuario <input type='text' name='usuario'/>";
@@ -24,7 +24,13 @@ if($usuario!=null){
 Contraseña<input type="password" name="contra"/>
 <br/>
 <br/>
-Recordar<input type="checkbox" name="recordar"/>
+<?php 
+if($_SESSION["BD"]["recordar"]==true){
+    echo "Recordar<input type='checkbox' name='recordar' checked='checked'/>";
+}else{
+    echo "Recordar<input type='checkbox' name='recordar'/>";
+}
+?>
 <br/>
 <br/>
 <input type="submit" value="Enviar">

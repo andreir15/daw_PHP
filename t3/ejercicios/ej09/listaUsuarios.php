@@ -1,10 +1,14 @@
 <?php
 session_start();
 $usuario=isset($_GET["usuario"])?$_GET["usuario"]:null;
-
+$mensajes=isset($_GET["mensaje"])?$_GET["mensaje"]:null;
+$numMensajes=0;
+if($mensajes!=null){
+    $numMensajes++;
+}
 echo "Usuario actual $usuario";
 ?>
-<h1>Lista de usuarios / mensajes</h1>
+<h2>Lista de usuarios / mensajes</h2>
 <?php 
 $numMensajes=0;
 foreach ($_SESSION["BD"] as $k=> $v){

@@ -1,11 +1,5 @@
 <?php
 session_start();
-$usuarioR=isset($_SESSION["usuarioRegistro"])?$_SESSION["usuarioRegistro"]:null;
-$contraR=isset($_SESSION["contraRegistro"])?$_SESSION["contraRegistro"]:null;
-if($usuarioR!=null){
-    $_SESSION["usuarioRegistro"]=$usuarioR;
-    $_SESSION["contraRegistro"]=$contraR;
-}
 
 ?>
 <form action="login.php">

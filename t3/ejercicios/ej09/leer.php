@@ -1,13 +1,13 @@
 <?php
 session_start();
 $usuario=isset($_GET["usuario"])?$_GET["usuario"]:null;
-
-echo "<h1>Lista de mensajes de $usuario</h1>";
+echo "Usuario actual $usuario";
+echo "<h3>Lista de mensajes de $usuario</h3>";
 ?>
 <div>
-<h1>Fecha</h1>
-<h1>Texto</h1>
+<h3>Fecha Texto</h3>
 </div>
 Uno 
 Dos
+<br/>
 <a href="listaUsuarios.php">Volver a lista de usuarios</a>
