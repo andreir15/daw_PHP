@@ -12,3 +12,4 @@ Contraseña<input type="password" name="contraRegistro"/>
 <br/>
 <input type="submit" value="Enviar"/>
 </form>
+<a href="login.php">Volver a login</a>

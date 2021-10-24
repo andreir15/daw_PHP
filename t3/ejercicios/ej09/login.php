@@ -1,34 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Ej 09</title>
+	<meta charset="UTF-8">
+</head>
+<body>
 <form action="listaUsuarios.php">
 <h1>LOGIN</h1>
 <?php
 
 session_start();
-$usuario=isset($_SESSION["usuario"])?$_SESSION["usuario"]:null;
+$usuarioR=isset($_GET["usuarioRegistro"])?$_GET["usuarioRegistro"]:null;
 
-if(isset($_GET["usuarioRegistro"])){
-$_SESSION["usuario"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"],"mensajes"=>[]];
-}
-$_SESSION["BD"]=["activo"=>"","recordar"=>false,"usuarios"=>$usuario];
 
-$recordar=isset($_SESSION["BD"]["recordar"])?$_SESSION["BD"]["recordar"]:null;
-if($recordar!=true){
-    echo "Usuario <input type='text' name='usuario' value='{$_SESSION["BD"]["activo"]}'/>";
-    
-}else{
-    echo "Usuario <input type='text' name='usuario'/>";
+if($usuarioR!=null){
+$_SESSION["usuarios"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"]];
+
 }
+
+$usuarios=isset($_SESSION["usuarios"])?$_SESSION["usuarios"]:[];
+
+$_SESSION["BD"]=["recordar"=>false,"usuarios"=>$usuarios];
+
+$recordar=isset($_SESSION["recordar"])?$_SESSION["recordar"]:null;
+if(isset($_SESSION["usuarioRegistro"])&&$recordar==true){
+    echo "Usuario <input type='text' name='usuarioL' value='$usuarioR'/> ";
+}
+
+else{
+    echo "Usuario <input type='text' name='usuarioL' /> ";
+}
+
 ?>
 
 <br/>
 <br/>
-Contraseña<input type="password" name="contra"/>
+Contraseña<input type="password" name="contraL"/>
+
 <br/>
 <br/>
 <?php 
-if($_SESSION["BD"]["recordar"]==true){
-    echo "Recordar<input type='checkbox' name='recordar' checked='checked'/>";
+if(isset($_SESSION["recordar"])==true){
+    echo "<label for='recordar'>Recordar<input type='checkbox' id='recordar' value='recordar' checked='checked'/></label>";
 }else{
-    echo "Recordar<input type='checkbox' name='recordar'/>";
+    echo "<label for='recordar'>Recordar<input type='checkbox' id='recordar' value='recordar'/></label>";
 }
 ?>
 <br/>
@@ -38,3 +53,5 @@ if($_SESSION["BD"]["recordar"]==true){
 <br/>
 <a href="registrar.php">Registrar nuevo usuario</a>
 </form>
+</body>
+</html>

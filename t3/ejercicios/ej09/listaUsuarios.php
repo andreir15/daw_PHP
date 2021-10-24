@@ -1,23 +1,23 @@
 <?php
 session_start();
-$usuario=isset($_GET["usuario"])?$_GET["usuario"]:null;
+$usuarioL=isset($_GET["usuarioL"])?$_GET["usuarioL"]:null;
+$recordar=isset($_GET["recordar"])?true:false;
 $mensajes=isset($_GET["mensaje"])?$_GET["mensaje"]:null;
 $numMensajes=0;
 if($mensajes!=null){
     $numMensajes++;
 }
-echo "Usuario actual $usuario";
+echo "Usuario actual $usuarioL";
 ?>
 <h2>Lista de usuarios / mensajes</h2>
 <?php 
-$numMensajes=0;
-foreach ($_SESSION["BD"] as $k=> $v){
+foreach ($_SESSION["array"] as $k=> $v){
     
 if($numMensajes==0){
-    echo "$k ($numMensajes) <a href='escribir.php'>Escribir</a>";
+    echo "$k ($numMensajes) <a href='escribir.php'>Escribir</a><br/>";
 }
 else{
-    echo "$k ($numMensajes) <a href='leer.php'>Leer</a> <a href='escribir.php'>Escribir</a>";
+    echo "$v ($numMensajes) <a href='leer.php'>Leer</a> <a href='escribir.php'>Escribir</a><br/>";
 }
 }
 
