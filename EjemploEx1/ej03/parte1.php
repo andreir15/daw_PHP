@@ -1,16 +1,15 @@
 <head>
 <script>
-  function usarAjax(){
+  function usarAjax(tipo){
 var xmlhttp=new XMLHttpRequest();
-xmlhttp.open("GET","ajax.php?peli="+document.getElementById("peli").value,true);
-xmlhttp.open("GET","ajax.php?cancion="+document.getElementById("cancion").value,true);
+var script=tipo+'.php';
+xmlhttp.open("GET","script?tipo="+document.getElementById("id-"+tipo).value,true);
 xmlhttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
 xmlhttp.send();
-
 xmlhttp.onreadystatechange=function(){
    if(xmlhttp.readyState==4 && xmlhttp.status==200){
-         document.getElementById("peli").innerHTML=xmlhttp.responseText;
-          document.getElementById("cancion").innerHTML=xmlhttp.responseText;
+         document.getElementById("id-"+tipo).innerHTML=xmlhttp.responseText;
+         
      }
   }
  
@@ -18,6 +17,9 @@ xmlhttp.onreadystatechange=function(){
 </script>
 </head>
 <body>
-<input type="submit" value="Peli favorita" onchange="usarAjax()"/> <input type="text" id="peli"/>
+<button onchange="usarAjax('ajaxPeli')" >Peli favorita</button> 
+<input type="text" id="id-ajaxPeli" readonly="readonly"/>
 <br/>
-<input type="submit" value="Cancion favorita" onchange="usarAjax()"/> <input type="text" id="cancion"/> 
+<button onchange="usarAjax('ajaxCanciones')" >Cancion favorita</button>
+<input type="text" id="id-ajaxCanciones" readonly="readonly"/> 
+</body>
