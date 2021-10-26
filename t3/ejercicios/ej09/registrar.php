@@ -7,7 +7,7 @@ session_start();
 Usuario<input type="text" name="usuarioRegistro" />
 <br/>
 <br/>
-Contraseña<input type="password" name="contraRegistro"/>
+ContraseÃ±a<input type="password" name="contraRegistro"/>
 <br/>
 <br/>
 <input type="submit" value="Enviar"/>

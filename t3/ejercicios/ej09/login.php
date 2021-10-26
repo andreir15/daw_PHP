@@ -1,49 +1,52 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<title>Ej 09</title>
-	<meta charset="UTF-8">
-</head>
-<body>
+
 <form action="listaUsuarios.php">
 <h1>LOGIN</h1>
 <?php
 
 session_start();
-$usuarioR=isset($_GET["usuarioRegistro"])?$_GET["usuarioRegistro"]:null;
-
-
-if($usuarioR!=null){
-$_SESSION["usuarios"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"]];
+isset($_GET["usuarioRegistro"])?$_GET["usuarioRegistro"]:$_GET["usuarioRegistro"]="";
+isset($_GET["contraRegistro"])?$_GET["contraRegistro"]:$_GET["contraRegistro"]="";
+if($_GET["usuarioRegistro"]!="" && $_GET["contraRegistro"]!=""){
+    $_SESSION["usuarios"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"],"mensajes"=>[]];
+ $prueba=$_SESSION["usuarios"];
+ print_r($prueba);
+}
+echo "<br/>";
+if(isset($_GET["usuarioRegistro"])&&$_SESSION["usuarios"]){
+$_SESSION["usuarios"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"],"mensajes"=>[]];
 
 }
 
 $usuarios=isset($_SESSION["usuarios"])?$_SESSION["usuarios"]:[];
+$recordar=isset($_SESSION["recordar"])?$_SESSION["recordar"]:false;
+$activo=isset($_SESSION["activo"])?$_SESSION["activo"]:"";
+$_SESSION=["activo"=>$activo,"recordar"=>$recordar,"usuarios"=>$usuarios];
 
-$_SESSION["BD"]=["recordar"=>false,"usuarios"=>$usuarios];
 
-$recordar=isset($_SESSION["recordar"])?$_SESSION["recordar"]:null;
-if(isset($_SESSION["usuarioRegistro"])&&$recordar==true){
-    echo "Usuario <input type='text' name='usuarioL' value='$usuarioR'/> ";
+
+if($recordar){
+    echo "Usuario <input type='text' name='usuarioL' value='{$_SESSION["activo"]}'/> ";
 }
 
 else{
-    echo "Usuario <input type='text' name='usuarioL' /> ";
+    echo "Usuario <input type='text' name='usuarioL'/> ";
 }
+    
+
 
 ?>
 
 <br/>
 <br/>
-Contraseña<input type="password" name="contraL"/>
+ContraseÃ±a<input type="password" name="contraL"/>
 
 <br/>
 <br/>
 <?php 
-if(isset($_SESSION["recordar"])==true){
-    echo "<label for='recordar'>Recordar<input type='checkbox' id='recordar' value='recordar' checked='checked'/></label>";
+if($_SESSION["recordar"]){
+    echo "<label for='recordar'>Recordar<input type='checkbox' name='recordar' id='recordar' value='true' checked='checked'/></label>";
 }else{
-    echo "<label for='recordar'>Recordar<input type='checkbox' id='recordar' value='recordar'/></label>";
+    echo "<label for='recordar'>Recordar<input type='checkbox' name='recordar' id='recordar' value='true'/></label>";
 }
 ?>
 <br/>
@@ -53,5 +56,3 @@ if(isset($_SESSION["recordar"])==true){
 <br/>
 <a href="registrar.php">Registrar nuevo usuario</a>
 </form>
-</body>
-</html>

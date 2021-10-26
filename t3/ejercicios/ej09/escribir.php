@@ -1,11 +1,10 @@
 <?php
 session_start();
-$de=$_SESSION["usuarioRegistro"];
-$para=$_SESSION["usuarioRegistro"];
+
 ?><form action="listaUsuarios.php">
-De : <input type="text" id="de" value="<?=$de?>" readonly="readonly"/>
+De : <input type="text" id="de" value="<?php $_SESSION["activo"] ?>" readonly="readonly"/>
 <br/>
-Para : <input type="text" id="para" value="<?=$para?>"  readonly="readonly"/>
+Para : <input type="text" id="para" value="<?php $_GET["para"]?>"  readonly="readonly"/>
 <br/>
 Escribe el contenido del mensaje
 <br/>
