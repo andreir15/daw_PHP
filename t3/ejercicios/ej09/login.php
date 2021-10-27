@@ -1,18 +1,8 @@
-
-<form action="listaUsuarios.php">
-<h1>LOGIN</h1>
 <?php
 
 session_start();
-isset($_GET["usuarioRegistro"])?$_GET["usuarioRegistro"]:$_GET["usuarioRegistro"]="";
-isset($_GET["contraRegistro"])?$_GET["contraRegistro"]:$_GET["contraRegistro"]="";
-if($_GET["usuarioRegistro"]!="" && $_GET["contraRegistro"]!=""){
-    $_SESSION["usuarios"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"],"mensajes"=>[]];
- $prueba=$_SESSION["usuarios"];
- print_r($prueba);
-}
-echo "<br/>";
-if(isset($_GET["usuarioRegistro"])&&$_SESSION["usuarios"]){
+
+if(isset($_GET["usuarioRegistro"])&&(!array_key_exists($_GET["usuarioRegistro"],$_SESSION["usuarios"]))){
 $_SESSION["usuarios"][$_GET["usuarioRegistro"]]=["contra"=>$_GET["contraRegistro"],"mensajes"=>[]];
 
 }
@@ -22,17 +12,20 @@ $recordar=isset($_SESSION["recordar"])?$_SESSION["recordar"]:false;
 $activo=isset($_SESSION["activo"])?$_SESSION["activo"]:"";
 $_SESSION=["activo"=>$activo,"recordar"=>$recordar,"usuarios"=>$usuarios];
 
+?>
 
+<h1>LOGIN</h1>
+<form action="listaUsuarios.php">
 
+<?php 
 if($recordar){
-    echo "Usuario <input type='text' name='usuarioL' value='{$_SESSION["activo"]}'/> ";
+    echo "Usuario <input type='text' name='usuarioL' value='".$_SESSION["activo"]."'/> ";
 }
 
 else{
     echo "Usuario <input type='text' name='usuarioL'/> ";
 }
     
-
 
 ?>
 
@@ -52,7 +45,7 @@ if($_SESSION["recordar"]){
 <br/>
 <br/>
 <input type="submit" value="Enviar">
-<br/>
+</form>
 <br/>
 <a href="registrar.php">Registrar nuevo usuario</a>
-</form>
+
