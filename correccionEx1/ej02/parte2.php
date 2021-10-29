@@ -1,0 +1,11 @@
+<?php
+$sustantivo=isset($_POST["sustantivo"])?$_POST["sustantivo"]:"nada";
+$accion=isset($_POST["accion"])?$_POST["accion"]:"nada";
+session_start();
+$_SESSION["sustantivo"][]=$sustantivo;
+if($accion=="Combinar"){
+ header("Location:parte3.php");   
+}else{
+header("Location:parte1.php");
+}
+?>
