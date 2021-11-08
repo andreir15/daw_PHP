@@ -78,6 +78,19 @@ SQL;
 $resultado=R::getCell($sql);
 echo $resultado.PHP_EOL;
 
+/////////////////////////////RELACION MUCHOS A UNO////////////////////////////////
+
+
+
+$a=R::dispense("alumno");
+$a->nombre="Pepe";
+//$a->colegio=$c; Si se crea primero el colegio y despues el alumno se escribe esto
+R::store($a);
+
+$c=R::dispense("colegio");
+$c->nombre="IES Rey Fernando VI";
+$c->ownAlumnoList[]=$a; //si se crea primero el alumno y despues el colegio se escribe esto
+R::store($c);
 
 desconectar();
 echo "DESCONECTADO".PHP_EOL;
