@@ -16,6 +16,9 @@ desconectar();
 <form action="parte1Persona.php">
 <input type="submit" value="Nueva persona"/> 
 </form>
+<form action="index.php">
+<input type="submit" value="Inicio"/> 
+</form>
 <table border="1">
 <tr>
 <th>Nombre persona</th>
@@ -27,13 +30,11 @@ foreach ($personas as $persona):?>
 <td>
    <?=$persona->nombre?>
 </td>
-<?php endforeach;?>
-
-<?php 
-foreach ($paises as $pais):?>
 <td>
-   <?=$pais->nombre?>
+   <?=$persona->pais->nombre?>
 </td>
 </tr>
 <?php endforeach;?>
+
 </table>
+

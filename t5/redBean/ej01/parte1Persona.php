@@ -2,6 +2,7 @@
 Nombre persona:
 <input type="text" name="persona" required="required"/>
 <br>
+Pais:
 <?php 
 function conectar(){
     require_once '../rb.php';
@@ -12,9 +13,9 @@ function desconectar(){
 }
 conectar();
 $paises=R::findAll("pais");
-echo "<select>";
+echo "<select name='paisSelect'>";
 foreach ($paises as $pais){
-echo "<option>$pais->nombre</option>";
+echo "<option>$pais->pais</option>";
 }
 echo "</select>";
 desconectar();

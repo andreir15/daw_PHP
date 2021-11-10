@@ -15,6 +15,9 @@ desconectar();
 <form action="parte1Pais.php">
 <input type="submit" value="Nuevo pais"/> 
 </form>
+<form action="index.php">
+<input type="submit" value="Inicio"/> 
+</form>
 <table border="1">
 <tr>
 <th>Nombre</th>
