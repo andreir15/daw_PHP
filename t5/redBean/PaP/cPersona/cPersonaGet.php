@@ -10,8 +10,8 @@ $aficiones = R::findAll('aficion');
 	<input type="text" name="nombre" required="required"/>
 	<br/>
 	
-	País
-	<select name="idPais">
+	País nacimiento
+	<select name="idPaisN">
 	<!--  <select name="nombrePais"> -->
 		<?php foreach ($paises as $pais):?>
 		
@@ -23,13 +23,36 @@ $aficiones = R::findAll('aficion');
 		
 		<?php endforeach;?>
 	</select>
-	
+	País residencia
+	<select name="idPaisV">
+	<!--  <select name="nombrePais"> -->
+		<?php foreach ($paises as $pais):?>
+		
+		<option value="<?= $pais->id?>">
+		<!--  <option value="<?= $pais->nombre?>"> -->
+			<?= $pais->nombre?>
+			
+		</option>
+		
+		<?php endforeach;?>
+	</select>
 	<fieldset>
-	<legend>Aficiones</legend>
+	<legend>Aficiones que me gustan</legend>
 		<?php foreach ($aficiones as $aficion):?>
 		
-			<input id="id-<?=$aficion->id?>" type="checkbox" name="idAficiones[]" value="<?=$aficion->id?>"/>
-			<label for="id-<?=$aficion->id?>"><?=$aficion->nombre?></label>
+			<input id="idg-<?=$aficion->id?>" type="checkbox" name="idAficionesGusta[]" value="<?=$aficion->id?>"/>
+			<label for="idg-<?=$aficion->id?>"><?=$aficion->nombre?></label>
+		
+		<?php endforeach;?>
+	</fieldset>
+	
+	<br/>
+	<fieldset>
+	<legend>Aficiones que no aborrezco</legend>
+		<?php foreach ($aficiones as $aficion):?>
+		
+			<input id="ido-<?=$aficion->id?>" type="checkbox" name="idAficionesOdio[]" value="<?=$aficion->id?>"/>
+			<label for="ido-<?=$aficion->id?>"><?=$aficion->nombre?></label>
 		
 		<?php endforeach;?>
 	</fieldset>

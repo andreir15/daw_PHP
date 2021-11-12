@@ -26,8 +26,8 @@ desconectar();
 				<?=$aficion->nombre?>
 			</td>
 			<td> 
-				<?php foreach ($aficion->ownPersonaList as $persona):?>
-					<?=$persona->nombre?> 
+				<?php foreach ($aficion->sharedPersonaList as $persona):?>
+					<?=$persona->nombre?>  
 				<?php endforeach;?>
 			</td>
 		</tr>
