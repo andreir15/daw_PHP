@@ -16,8 +16,8 @@ desconectar();
 
 <table border="1">
 	<tr> 
-		<th>Afición</th>
-		<th>Nombre persona</th>	
+		<th>Nombre </th>	
+		<th>Aficionados</th>	
 	</tr>
 
 	<?php foreach ($aficiones as $aficion):?>
@@ -25,9 +25,9 @@ desconectar();
 			<td>
 				<?=$aficion->nombre?>
 			</td>
-			<td> 
+			<td>
 				<?php foreach ($aficion->sharedPersonaList as $persona):?>
-					<?=$persona->nombre?>  
+					<?=$persona->nombre?> 
 				<?php endforeach;?>
 			</td>
 		</tr>

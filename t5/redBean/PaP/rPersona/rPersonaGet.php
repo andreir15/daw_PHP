@@ -1,6 +1,6 @@
 <?php 
 require_once '../bd/bdh.php';
-conectar(); 
+conectar();
 $personas=R::findAll('persona');
 desconectar();
 ?>
@@ -16,10 +16,10 @@ desconectar();
 <table border="1">
 	<tr> 
 		<th>Nombre </th>	
-		<th>País de nacimiento</th>
+		<th>País de nacimiento</th>	
 		<th>País de residencia</th>	
 		<th>Aficiones que gustan</th>	
-		<th>Aficiones que no gustan</th>	
+		<th>Aficiones que odia</th>	
 	</tr>
 
 	<?php foreach ($personas as $persona):?>
@@ -27,20 +27,24 @@ desconectar();
 			<td>
 				<?=$persona->nombre?>
 			</td>
+			
 			<td> 
-				<?=$persona->fetchAs('pais')->nace->nombre?>
+				<?=$persona->nace_id!=null?$persona->fetchAs('pais')->nace->nombre:'-ninguno-'?>
 			</td>
+
 			<td> 
 				<?=$persona->fetchAs('pais')->vive->nombre?>
 			</td>
+			
 			<td>
-				<?php foreach ($persona->ownGustaList as $aficionGusta):?>
-					<?=$aficionGusta->nombre?> 
+				<?php foreach ($persona->ownGustaList as $gusto):?>
+					<?=$gusto->aficion->nombre?> 
 				<?php endforeach;?>
 			</td>
+			
 			<td>
-				<?php foreach ($persona->ownOdioList as $aficionOdio):?>
-					<?=$aficionOdio->nombre?> 
+			<?php foreach ($persona->aggr('ownOdioList','aficion') as $aficion):?>
+					<?=$aficion->nombre?> 
 				<?php endforeach;?>
 			</td>
 		</tr>

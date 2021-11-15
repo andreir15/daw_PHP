@@ -5,6 +5,11 @@ $paises = R::findAll('pais');
 $aficiones = R::findAll('aficion');
 ?>
 <h1>Nueva persona</h1>
+
+<form action="../rPersona/rPersonaGet.php">
+<input type="submit" value="Volver"/>
+</form>
+
 <form action="cPersonaPost.php" method="post">
 	Nombre
 	<input type="text" name="nombre" required="required"/>
@@ -12,17 +17,16 @@ $aficiones = R::findAll('aficion');
 	
 	País nacimiento
 	<select name="idPaisN">
-	<!--  <select name="nombrePais"> -->
+		<option value="ninguno"> --Ninguno-- </option>
 		<?php foreach ($paises as $pais):?>
 		
 		<option value="<?= $pais->id?>">
-		<!--  <option value="<?= $pais->nombre?>"> -->
 			<?= $pais->nombre?>
-			
 		</option>
 		
 		<?php endforeach;?>
 	</select>
+	
 	País residencia
 	<select name="idPaisV">
 	<!--  <select name="nombrePais"> -->
@@ -36,6 +40,7 @@ $aficiones = R::findAll('aficion');
 		
 		<?php endforeach;?>
 	</select>
+	
 	<fieldset>
 	<legend>Aficiones que me gustan</legend>
 		<?php foreach ($aficiones as $aficion):?>
@@ -45,10 +50,9 @@ $aficiones = R::findAll('aficion');
 		
 		<?php endforeach;?>
 	</fieldset>
-	
-	<br/>
+
 	<fieldset>
-	<legend>Aficiones que no aborrezco</legend>
+	<legend>Aficiones que aborrezco</legend>
 		<?php foreach ($aficiones as $aficion):?>
 		
 			<input id="ido-<?=$aficion->id?>" type="checkbox" name="idAficionesOdio[]" value="<?=$aficion->id?>"/>
@@ -56,6 +60,8 @@ $aficiones = R::findAll('aficion');
 		
 		<?php endforeach;?>
 	</fieldset>
+
+
 	
 	<br/>
 	<input type="submit"/>
