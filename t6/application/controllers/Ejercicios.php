@@ -9,12 +9,13 @@ class Ejercicios extends CI_Controller {
         $this->load->view('ejercicios/ej02/index',$datos);
     }
     public function ej03() {
-        $datos=['links'=>[
-            "BING"=>"http://www.bing.com",
-            "GOOGLE"=>"http://www.google.com",
-            "YAHOO"=>"http://www.yahoo.com"],
-            
-        ];
-        $this->load->view('ejercicios/ej03/index',$datos);
+        $this->load->helper("andrei");
+        $this->load->model("Ejercicios_model");
+        $d["links"]=$this->Ejercicios_model->getLinks();
+        $this->load->view('ejercicios/ej03/index',$d);
+        //Esto son el ej03 y ej04 juntos
+    }
+    public function ej05() {
+        $this->load->view('ejercicios/ej05/index');
     }
 }
