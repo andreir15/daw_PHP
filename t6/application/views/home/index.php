@@ -1,6 +1,9 @@
-<h1>HOLA BIENVENIDO a mi aplación CodeIgniter</h1>
-<a href="<?=base_url()?>ejercicios/ej01">Ej01</a>
+<div class="container jumbotron">
+<h1>P.A.P</h1>
+<a href="<?=base_url()?>pais/r">Paises</a>
 <br>
-<a href="<?=base_url()?>ejercicios/ej02">Ej02</a>
+<a href="<?=base_url()?>aficion/r">Aficion</a>
 <br>
-<a href="<?=base_url()?>ejercicios/ej03">Ej03</a>
+<a href="<?=base_url()?>persona/r">Persona</a>
+<br>
+</div>
