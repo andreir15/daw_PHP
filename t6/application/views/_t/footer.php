@@ -1,1 +1,2 @@
-<?php
+<footer class="container">
+</footer>
