@@ -3,7 +3,7 @@ class Persona extends CI_Controller{
     function r(){
         $this->load->model('Persona_model');
         $data['personas'] = $this->Persona_model->getAll();
-        frame($this,'personas/r',$data);
+        frame($this,'persona/r',$data);
     }
     function c() {
         frame($this,'persona/c');
