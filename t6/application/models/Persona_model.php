@@ -1,21 +1,93 @@
 <?php
 class Persona_model extends CI_Model {
-    
-    function c($nombre) {
-        $persona= R::findOne('persona','nombre=?',[$nombre]);
+    public function c($nombre,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
         
-        if ($persona==null) {
-            $persona=R::dispense('persona');
-            $persona->nombre = $nombre;
-            R::store($persona);
+        if ($idPaisNace==null) {
+            throw new Exception("ID País no puede ser nulo");
         }
-        else {
-            throw new Exception("La persona {$persona->nombre} ya existe");
+        
+        $persona = R::dispense('persona');
+        $persona->nombre = $nombre;
+        $persona->nace = R::load('pais',$idPaisNace);
+        $persona->vive = R::load('pais',$idPaisVive);
+        foreach ($idsAficionGusta as $idAficionGusta) {
+            $aficionGusta = R::load('aficion',$idAficionGusta);
+            $gusto = R::dispense('gusto');
+            $gusto->persona = $persona;
+            $gusto->aficion = $aficionGusta;
+            R::store($gusto);
         }
+        foreach ($idsAficionOdia as $idAficionOdia) {
+            $aficionOdia = R::load('aficion',$idAficionOdia);
+            $odio = R::dispense('odio');
+            $odio->persona = $persona;
+            $odio->aficion = $aficionOdia;
+            R::store($odio);
+        }
+        R::store($persona);
     }
     
-    function getAll() {
+    public function getAll() {
         return R::findAll('persona');
     }
+
+    function u($idPersona,$nombre,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
+        $persona=R::load('persona',$idPersona);
+        $persona->nombre = $nombre;
+        $persona->nace= R::load('pais',$idPaisNace);
+        $persona->vive= R::load('pais',$idPaisVive);
+        $idsComunes=[];
+        foreach($persona->ownGustoList as $gusto){
+            if(in_array($gusto->aficion_id,$idsAficionGusta)){
+                $idsComunes[]=$gusto->aficion_id;
+            }else{
+                R::store($persona);
+                R::trash($gusto);
+             
+            }
+        }
+        foreach(array_diff($idsAficionGusta, $idsComunes) as $idAficion){
+           $aficion=R::load('aficion',$idAficion) ;
+           $gusto=R::dispense('gusto');
+        $gusto->persona=$persona;
+        $gusto->aficion=$aficion;
+        R::store($persona);
+        R::store($gusto);
+       
+        }
+        foreach($persona->ownOdioList as $odio){
+            if(in_array($odio->aficion_id, $idsAficionOdia)){
+               $comunes[]=$odio->aficion_id; 
+            }else{
+                R::trash($odio);
+                R::store($persona);
+            }
+        }
+        foreach(array_diff($idsAficionOdia, $idsComunes) as $idAficion){
+            $aficion=R::load('aficion',$idAficion) ;
+            $odio=R::dispense('odio');
+            $odio->persona=$persona;
+            $odio->aficion=$aficion;
+            R::store($odio);
+            R::store($persona);
+        }
+        R::store($persona);
+    }
+    
+    function getPersonaById($id) {
+        return R::load('persona',$id);
+    }
+    
+    function d($idPersona) {
+        if ($idPersona!=null) {
+            $persona = R::load('persona',$idPersona);
+            if ($persona->id == 0) {
+                throw new Exception("La persona id={$idPersona} no existe");
+            }
+            R::trash($persona);
+        }
+        
+    }
+    
 }
 ?>
