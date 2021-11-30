@@ -6,7 +6,9 @@
 		<label for="id-nombre">Nombre</label>
 		<input id="id-nombre" type="text" name="nombre" autofocus="autofocus"/>
 		<br/>
-		
+        <label for="id-pwd">Contraseña</label>
+        <input id="id-pwd" type="password" name="pwd">		
+		<br>
 		País de nacimiento
 		<select name="idPaisNace">
 			<?php foreach ($paises as $pais):?>

@@ -1,6 +1,6 @@
 <?php
 class Persona_model extends CI_Model {
-    public function c($nombre,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
+    public function c($nombre,$pwd,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
         
         if ($idPaisNace==null) {
             throw new Exception("ID País no puede ser nulo");
@@ -8,6 +8,7 @@ class Persona_model extends CI_Model {
         
         $persona = R::dispense('persona');
         $persona->nombre = $nombre;
+        $persona->pwd=$pwd;
         $persona->nace = R::load('pais',$idPaisNace);
         $persona->vive = R::load('pais',$idPaisVive);
         foreach ($idsAficionGusta as $idAficionGusta) {
@@ -68,8 +69,9 @@ class Persona_model extends CI_Model {
             $odio=R::dispense('odio');
             $odio->persona=$persona;
             $odio->aficion=$aficion;
-            R::store($odio);
             R::store($persona);
+            R::store($odio);
+           
         }
         R::store($persona);
     }

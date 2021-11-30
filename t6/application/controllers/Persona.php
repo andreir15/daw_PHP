@@ -18,6 +18,8 @@ class Persona extends CI_Controller {
     
     public function cPost() {
         $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : 'John Doe';
+        $pwd=isset($_POST['pwd'])?$_POST['pwd']:null;
+        $pwd=password_hash($pwd, PASSWORD_BCRYPT);
         $idPaisNace = isset($_POST['idPaisNace']) ? $_POST['idPaisNace'] : null;
         $idPaisVive = isset($_POST['idPaisVive']) ? $_POST['idPaisVive'] : null;
         $idsAficionGusta = isset($_POST['idAficionGusta']) ? $_POST['idAficionGusta'] : [];
@@ -25,7 +27,7 @@ class Persona extends CI_Controller {
         $this->load->model('Persona_model');
         
         try {
-            $this->Persona_model->c($nombre,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia);
+            $this->Persona_model->c($nombre,$pwd,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia);
             redirect(base_url().'persona/r');
         }
         catch (Exception $e) {
