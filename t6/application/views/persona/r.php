@@ -30,7 +30,7 @@
 					<?=($persona->vive_id) != null ? $persona->fetchAs('pais')->vive->nombre : '' ?>
 				</td>
 				
-			<td>
+				<td>
 					<?php foreach ($persona->ownGustoList as $gusto):?>
 						<?=$gusto->aficion_id!=NULL ? $gusto->aficion->nombre : ''?> 
 					<?php endforeach;?>

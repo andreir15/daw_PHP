@@ -1,6 +1,18 @@
 <?php
 class Persona_model extends CI_Model {
-    public function c($nombre,$pwd,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
+    
+    public function login($nombre,$password) {
+        $persona = R::findOne('persona','nombre=?',[$nombre]);
+        if ($persona==null) {
+            throw new Exception('Usuario inválido');
+        }
+        if (! password_verify( $password, $persona->password )) {
+            throw new Exception('Contraseña inválida');
+        }
+        return $persona;
+    }
+    
+    public function c($nombre,$password,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
         
         if ($idPaisNace==null) {
             throw new Exception("ID País no puede ser nulo");
@@ -8,7 +20,8 @@ class Persona_model extends CI_Model {
         
         $persona = R::dispense('persona');
         $persona->nombre = $nombre;
-        $persona->pwd=$pwd;
+        $persona->password = password_hash($password, PASSWORD_BCRYPT);
+        $persona->admin = false;
         $persona->nace = R::load('pais',$idPaisNace);
         $persona->vive = R::load('pais',$idPaisVive);
         foreach ($idsAficionGusta as $idAficionGusta) {
@@ -33,46 +46,58 @@ class Persona_model extends CI_Model {
     }
 
     function u($idPersona,$nombre,$idPaisNace,$idPaisVive,$idsAficionGusta,$idsAficionOdia) {
+        
         $persona=R::load('persona',$idPersona);
         $persona->nombre = $nombre;
-        $persona->nace= R::load('pais',$idPaisNace);
-        $persona->vive= R::load('pais',$idPaisVive);
-        $idsComunes=[];
-        foreach($persona->ownGustoList as $gusto){
-            if(in_array($gusto->aficion_id,$idsAficionGusta)){
-                $idsComunes[]=$gusto->aficion_id;
-            }else{
+        $persona->nace = R::load('pais',$idPaisNace);
+        $persona->vive_id = $idPaisVive;
+        
+        $idsComunes = [];
+        
+        
+        // Actualización de gustos
+        foreach ($persona->ownGustoList as $gusto) {
+            if (in_array($gusto->aficion_id,$idsAficionGusta)) {
+               $idsComunes[] = $gusto->aficion_id; 
+            }
+            else {
                 R::store($persona);
                 R::trash($gusto);
-             
             }
         }
-        foreach(array_diff($idsAficionGusta, $idsComunes) as $idAficion){
-           $aficion=R::load('aficion',$idAficion) ;
-           $gusto=R::dispense('gusto');
-        $gusto->persona=$persona;
-        $gusto->aficion=$aficion;
-        R::store($persona);
-        R::store($gusto);
-       
+        
+        foreach (array_diff($idsAficionGusta, $idsComunes) as $idAficion) {
+            $aficion = R::load('aficion',$idAficion);
+            $gusto = R::dispense('gusto');
+            $gusto->persona = $persona;
+            $gusto->aficion = $aficion;
+            R::store($persona);
+            R::store($gusto);
         }
-        foreach($persona->ownOdioList as $odio){
-            if(in_array($odio->aficion_id, $idsAficionOdia)){
-               $comunes[]=$odio->aficion_id; 
-            }else{
-                R::trash($odio);
+
+        // Actualización de odios
+        $idsComunes = [];
+        
+        foreach ($persona->ownOdioList as $odio) {
+            if (in_array($odio->aficion_id,$idsAficionOdia)) {
+                $idsComunes[] = $odio->aficion_id;
+            }
+            else {
                 R::store($persona);
+                R::trash($odio);
             }
         }
-        foreach(array_diff($idsAficionOdia, $idsComunes) as $idAficion){
-            $aficion=R::load('aficion',$idAficion) ;
-            $odio=R::dispense('odio');
-            $odio->persona=$persona;
-            $odio->aficion=$aficion;
+        
+        foreach (array_diff($idsAficionOdia, $idsComunes) as $idAficion) {
+            $aficion = R::load('aficion',$idAficion);
+            $odio = R::dispense('odio');
+            $odio->persona = $persona;
+            $odio->aficion = $aficion;
             R::store($persona);
             R::store($odio);
-           
         }
+        
+        
         R::store($persona);
     }
     
@@ -88,8 +113,6 @@ class Persona_model extends CI_Model {
             }
             R::trash($persona);
         }
-        
     }
-    
 }
 ?>
